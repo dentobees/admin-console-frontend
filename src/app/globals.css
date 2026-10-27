@@ -1,0 +1,186 @@
+/* Design tokens + component classes ported from the Claude Design handoff
+   (design-reference/crm/.../tokens.css). Single visual source of truth. */
+:root {
+  --brand-mint: #00D198;
+  --brand-charcoal: #252525;
+  --charcoal-hover: #1A1A1A;
+  --ink: #1E1E22;
+  --body: #3F3F46;
+  --muted: #71717A;
+  --hairline: #E4E4E7;
+  --hairline-soft: #F0F0F1;
+  --surface: #FFFFFF;
+  --page: #FAFAFA;
+  --success: #00D198;
+  --warning: #E0A100;
+  --warning-tint: #FBF3DC;
+  --danger: #D64545;
+  --danger-tint: #FBEAEA;
+  --mint-tint: #E2FBF3;
+  --mint-tint-2: #F0FCF8;
+  --hot: #EF4444;
+  --warm: #F59E0B;
+  --cold: #64748B;
+  --due-today: #252525;
+  --overdue: #D64545;
+  --r-sm: 6px; --r: 8px; --r-card: 12px; --r-pill: 999px;
+  --s1: 8px; --s2: 12px; --s3: 16px; --s4: 24px; --s5: 32px;
+  --shadow-pop: 0 8px 28px -8px rgba(24,24,27,.18), 0 2px 6px rgba(24,24,27,.06);
+  --shadow-card: 0 1px 2px rgba(24,24,27,.04);
+  --focus: 0 0 0 3px rgba(0,209,152,.35);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; color: var(--body); background: var(--page);
+  font-family: var(--font-body), system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+.h-page { font-family: var(--font-head); font-weight: 500; font-size: 22px; letter-spacing: -.01em; color: var(--ink); margin: 0; }
+.h-sec  { font-family: var(--font-head); font-weight: 500; font-size: 18px; color: var(--ink); margin: 0; }
+.h-card { font-family: var(--font-head); font-weight: 500; font-size: 15px; color: var(--ink); margin: 0; }
+.t-meta { font-size: 12.5px; color: var(--muted); }
+.t-label{ font-family: var(--font-head); font-weight: 500; font-size: 12px; color: var(--muted); }
+.num { font-family: var(--font-head); font-variant-numeric: tabular-nums; }
+
+.stage-pill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-head); font-weight: 500; font-size: 12px; padding: 3px 10px 3px 8px; border-radius: var(--r-pill); white-space: nowrap; line-height: 1.4; }
+.stage-pill .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.label-pill { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-head); font-weight: 500; font-size: 11.5px; padding: 2px 9px; border-radius: var(--r-pill); }
+.label-pill .dot { width: 6px; height: 6px; border-radius: 50%; }
+.source-tag { display: inline-flex; align-items: center; font-weight: 500; font-size: 11.5px; color: var(--muted); background: var(--page); border: 1px solid var(--hairline); padding: 2px 9px; border-radius: var(--r-pill); white-space: nowrap; }
+.owner-chip { display: inline-flex; align-items: center; gap: 7px; }
+.avatar { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; flex: none; font-family: var(--font-head); font-weight: 600; font-size: 10px; color: #fff; }
+
+.btn { font-family: var(--font-head); font-weight: 500; font-size: 13.5px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 16px; border-radius: var(--r); border: 1px solid transparent; cursor: pointer; transition: background .14s, border-color .14s; white-space: nowrap; line-height: 1; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-primary { background: var(--brand-charcoal); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--charcoal-hover); }
+.btn-secondary { background: var(--surface); color: var(--ink); border-color: var(--hairline); }
+.btn-secondary:hover:not(:disabled) { border-color: #CFCFD4; }
+.btn-mint { background: var(--brand-mint); color: #06241B; }
+.btn-ghost { background: transparent; color: var(--body); }
+.btn-ghost:hover:not(:disabled) { background: var(--hairline-soft); }
+.btn-sm { padding: 6px 11px; font-size: 12.5px; border-radius: var(--r-sm); }
+.btn-icon { padding: 8px; width: 34px; height: 34px; }
+.btn:focus-visible { outline: none; box-shadow: var(--focus); }
+
+.field-label { font-family: var(--font-head); font-weight: 500; font-size: 12.5px; color: var(--body); display: block; margin-bottom: 6px; }
+.input, .textarea, .select { width: 100%; font-family: var(--font-body); font-size: 14px; color: var(--ink); background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r); padding: 10px 12px; }
+.input:focus, .textarea:focus, .select:focus { outline: none; border-color: var(--brand-mint); box-shadow: var(--focus); }
+.textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+
+.card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-card); }
+.metric-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-card); padding: 16px 18px; }
+.metric-card .m-label { font-family: var(--font-head); font-weight: 500; font-size: 12.5px; color: var(--muted); }
+.metric-card .m-num { font-family: var(--font-head); font-weight: 600; font-size: 26px; color: var(--ink); margin-top: 8px; font-variant-numeric: tabular-nums; line-height: 1; }
+.metric-card.is-danger .m-num { color: var(--danger); }
+
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl thead th { font-family: var(--font-head); font-weight: 500; font-size: 11.5px; color: var(--muted); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--hairline); white-space: nowrap; }
+.tbl tbody td { font-size: 13px; color: var(--body); padding: 12px 14px; border-bottom: 1px solid var(--hairline-soft); }
+.tbl tbody tr { cursor: pointer; transition: background .12s; }
+.tbl tbody tr:hover { background: var(--mint-tint-2); }
+.tbl .right { text-align: right; font-variant-numeric: tabular-nums; }
+.tbl .rownum { width: 36px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.divider { height: 1px; background: var(--hairline); border: none; margin: 0; }
+.overdue-text { color: var(--overdue); font-weight: 500; }
+
+/* Row hover (follow-ups / drawer lists) + slide-in drawer animations */
+.hover-row { transition: background .12s; }
+.hover-row:hover { background: var(--mint-tint-2); }
+@keyframes dt-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dt-slideInRight { from { transform: translateX(24px); opacity: .4; } to { transform: translateX(0); opacity: 1; } }
+
+/* Segmented control (view / density toggles on the leads toolbar) */
+.segmented { display: inline-flex; background: var(--page); border: 1px solid var(--hairline); border-radius: var(--r); padding: 3px; gap: 3px; }
+.segmented button { font-family: var(--font-head); font-weight: 500; font-size: 13px; color: var(--muted); border: none; background: transparent; padding: 7px 14px; border-radius: 6px; cursor: pointer; transition: background .14s, color .14s; }
+.segmented button:hover { color: var(--ink); }
+.segmented button.active { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-card); }
+
+/* Filter chip (active filter pills shown under the toolbar) */
+.fchip { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body); font-weight: 500; font-size: 12.5px; color: var(--body); background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-pill); padding: 6px 12px; cursor: pointer; transition: border-color .14s, background .14s; }
+.fchip:hover { border-color: #CFCFD4; }
+.fchip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.fchip.active .x { opacity: .7; }
+.fchip .x { display: inline-flex; cursor: pointer; }
+
+/* Skeleton shimmer for the loading table */
+.skel { background: linear-gradient(90deg,#EFEFF1 25%,#F6F6F7 37%,#EFEFF1 63%); background-size: 400% 100%; animation: dt-skel 1.3s ease infinite; border-radius: 6px; }
+@keyframes dt-skel { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+input[type="checkbox"] { accent-color: var(--brand-mint); width: 15px; height: 15px; cursor: pointer; }
+
+/* Floating to-do widget: popover open motion + hover-reveal delete + mobile bottom-sheet */
+@keyframes dt-popIn { from { transform: translateY(6px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes dt-slideInUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.todo-widget-popover { animation: dt-popIn .16s cubic-bezier(.22,.61,.36,1); }
+.todo-widget-delete { opacity: 0; transition: opacity .12s; }
+.hover-row:hover .todo-widget-delete { opacity: 1; }
+@media (max-width: 640px) {
+  .todo-widget-popover {
+    left: 0 !important; right: 0 !important; bottom: 0 !important; top: auto !important;
+    width: 100% !important; max-height: 70vh !important;
+    border-radius: 16px 16px 0 0 !important;
+    animation: dt-slideInUp .2s cubic-bezier(.22,.61,.36,1) !important;
+  }
+}
+
+/* ======================================================================
+   DentoBees Admin additions. Everything ABOVE this line is copied verbatim
+   from dentobees-crm/frontend/src/app/globals.css (design review: exact
+   match). Below: only the approved responsive (D6) and accessibility (D7)
+   rules, built from the same tokens. Do not restyle anything above.
+   ====================================================================== */
+
+/* Keyboard focus (D7): same --focus ring the sales CRM uses on buttons. */
+a:focus-visible, button:focus-visible, select:focus-visible, [role="button"]:focus-visible {
+  outline: none; box-shadow: var(--focus); border-radius: var(--r-sm);
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* Plain-looking link/button resets so real <a>/<button> keep the sales look. */
+.link-reset { color: inherit; text-decoration: none; background: none; border: none; padding: 0; font: inherit; text-align: inherit; cursor: pointer; }
+
+/* Shell: desktop is the sales CRM grid exactly (224px dark sidebar + content). */
+.admin-shell { display: grid; grid-template-columns: 224px 1fr; min-height: 100vh; }
+.admin-sidebar { background: var(--brand-charcoal); display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; }
+.admin-menu-btn { display: none; }
+.admin-drawer-scrim { display: none; }
+.admin-main { padding: 24px; flex: 1; min-width: 0; }
+
+/* Overview / page grids. */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.main-grid { display: grid; grid-template-columns: 1fr 320px; gap: 18px; align-items: start; }
+.tbl-scroll { overflow-x: auto; }
+.only-phone { display: none; }
+
+/* Tablet + phone (<1024px): sidebar hides behind ☰ and slides in (D6). */
+@media (max-width: 1023px) {
+  .admin-shell { grid-template-columns: 1fr; }
+  .admin-sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 248px; z-index: 60; transform: translateX(-100%); transition: transform .2s cubic-bezier(.22,.61,.36,1); }
+  .admin-sidebar.is-open { transform: translateX(0); animation: dt-slideInRight .2s cubic-bezier(.22,.61,.36,1); }
+  .admin-drawer-scrim.is-open { display: block; position: fixed; inset: 0; z-index: 55; background: rgba(24,24,27,.4); }
+  .admin-menu-btn { display: grid; place-items: center; }
+  .main-grid { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .drawer-on-phone { width: 100% !important; min-width: 0 !important; }
+}
+
+/* Phone (<768px): stacked list items instead of wide tables; bottom-sheet
+   controls; 44px touch targets (D6). */
+@media (max-width: 767px) {
+  .admin-main { padding: 16px; }
+  .only-desktop { display: none !important; }
+  .only-phone { display: block; }
+  .admin-topbar-search { display: none; }
+  .admin-topbar-search.is-open { display: block; position: absolute; left: 12px; right: 12px; top: 10px; z-index: 20; }
+  .btn { min-height: 44px; }
+  .btn-icon { width: 44px; height: 44px; }
+  .sheet-on-phone { left: 0 !important; right: 0 !important; bottom: 0 !important; top: auto !important; width: 100% !important; max-width: 100% !important; border-radius: 16px 16px 0 0 !important; animation: dt-slideInUp .2s cubic-bezier(.22,.61,.36,1) !important; position: fixed !important; }
+}
+
+/* Phone list item (stacked row) used under 768px. */
+.list-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--hairline-soft); min-height: 56px; width: 100%; }
+.list-item:last-child { border-bottom: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-sidebar, .admin-sidebar.is-open { transition: none; animation: none; }
+}
