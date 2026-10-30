@@ -70,7 +70,7 @@ export default function StaffPage() {
     <div>
       <div style={{ marginBottom: 16 }}>
         <h1 className="h-page" style={{ marginBottom: 4 }}>Staff</h1>
-        <p className="t-meta" style={{ margin: 0 }}>People who can sign in to DentoBees Admin with their company Google account</p>
+        <p className="t-meta" style={{ margin: 0 }}>People who can sign in to DentoBees Admin. Set a new member's password on the server with admin-api set-password</p>
       </div>
 
       <form onSubmit={add} className="card" style={{ padding: 16, marginBottom: 16, display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>

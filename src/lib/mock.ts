@@ -144,5 +144,6 @@ export async function mockGet<T>(path: string): Promise<T> {
 export async function mockSend<T>(method: string, path: string, body?: unknown): Promise<T> {
   void method; void body;
   if (path === '/auth/logout') return delay(undefined as T);
+  if (path === '/auth/login') return delay(STAFF_ME as T);
   return delay({ ok: true } as T);
 }
