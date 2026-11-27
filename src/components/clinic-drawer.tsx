@@ -15,12 +15,14 @@ import { BarChart } from '@/components/charts';
 import { ControlModal, type ControlKind } from '@/components/control-modal';
 import { ErrorCard, UnavailableCard } from '@/components/states';
 
-export function ClinicDrawer({ clinicId, onClose, onPrev, onNext, onChanged }: {
+export function ClinicDrawer({ clinicId, onClose, onPrev, onNext, onChanged, retryNotFound }: {
   clinicId: string;
   onClose: () => void;
   onPrev?: () => void;
   onNext?: () => void;
   onChanged: () => void;
+  /** Just-created account: the read copy may lag, so a 404 is retried once after 1 s. */
+  retryNotFound?: boolean;
 }) {
   const { user } = useSession();
   const [d, setD] = useState<ClinicDetail | null>(null);
@@ -31,10 +33,16 @@ export function ClinicDrawer({ clinicId, onClose, onPrev, onNext, onChanged }: {
   const load = useCallback(() => {
     setError(null);
     setD(null);
-    apiGet<ClinicDetail>(`/crm/clinics/${clinicId}`)
+    const url = `/crm/clinics/${clinicId}`;
+    apiGet<ClinicDetail>(url)
+      .catch(async (e) => {
+        if (!retryNotFound || (e as { status?: number })?.status !== 404) throw e;
+        await new Promise((r) => setTimeout(r, 1000));
+        return apiGet<ClinicDetail>(url);
+      })
       .then(setD)
       .catch((e) => setError(isUnavailable(e) ? 'unavailable' : 'other'));
-  }, [clinicId]);
+  }, [clinicId, retryNotFound]);
   useEffect(() => { load(); }, [load]);
 
   // ↑/↓ between clinics (not while typing or while a control modal is open).

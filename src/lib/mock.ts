@@ -1,8 +1,9 @@
 // Fixture data for `pnpm dev:mock` (NEXT_PUBLIC_API_MOCK=1) while the Rust
 // admin-api is being built. The shell shows a "Fixture data" strip whenever
 // this is active, so nobody mistakes these numbers for the real CRM.
+import { ApiError } from './api';
 import type {
-  AuditRow, ClinicDetail, ClinicRow, CrmUserRow, LifecycleState, Overview, Page, StaffRow, StaffUser,
+  AuditRow, ClinicDetail, ClinicRow, CreateAccountInput, CreateAccountResult, CrmUserRow, LifecycleState, Overview, Page, StaffRow, StaffUser,
 } from './types';
 
 const NAMES = [
@@ -142,8 +143,21 @@ export async function mockGet<T>(path: string): Promise<T> {
 }
 
 export async function mockSend<T>(method: string, path: string, body?: unknown): Promise<T> {
-  void method; void body;
+  void method;
   if (path === '/auth/logout') return delay(undefined as T);
   if (path === '/auth/login') return delay(STAFF_ME as T);
+  if (path === '/crm/accounts') {
+    const input = body as CreateAccountInput;
+    if (input.email.includes('taken')) throw new ApiError(409, 'This email already has an account.');
+    const id = `c${String(CLINICS.length + 1).padStart(3, '0')}`;
+    // Added to the list so the drawer ("Open account") works in mock mode too.
+    CLINICS.unshift({
+      id, name: input.businessName, city: null, country: input.phoneCountry, signedUpAt: new Date().toISOString(),
+      state: 'new', planTier: 'starter', seats: 1, whatsapp: 'not_connected', replies30d: 0, lastEngagedAt: null,
+      erpLinked: false, internal: false,
+    });
+    const result: CreateAccountResult = { clinicId: id, clinicName: input.businessName, email: input.email.trim().toLowerCase() };
+    return delay(result as T);
+  }
   return delay({ ok: true } as T);
 }

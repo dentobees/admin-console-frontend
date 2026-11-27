@@ -9,7 +9,9 @@ import { apiGet, isUnavailable } from '@/lib/api';
 import { formatDate, sinceLabel } from '@/lib/format';
 import { STATE_DEF, STATE_ORDER } from '@/lib/lifecycle';
 import { PlanTag, StatePill } from '@/components/pills';
+import { useSession } from '@/lib/session';
 import { ClinicDrawer } from '@/components/clinic-drawer';
+import { NewAccountModal } from '@/components/new-account-modal';
 import { EmptyHint, ErrorCard, SkeletonRows, UnavailableCard } from '@/components/states';
 import { Icon } from '@/components/icon';
 
@@ -38,6 +40,11 @@ function ClinicsInner() {
   const internal = sp.get('internal') === '1';
   const page = Number(sp.get('page') || 1);
   const open = sp.get('open');
+  const { user } = useSession();
+  const canCreate = user?.role === 'founder' || user?.role === 'admin';
+  const [newAccount, setNewAccount] = useState(false);
+  // Id of an account created a moment ago: the drawer retries a 404 once for it.
+  const [justCreated, setJustCreated] = useState<string | null>(null);
 
   const [data, setData] = useState<Page<ClinicRow> | null>(null);
   const [error, setError] = useState<'unavailable' | 'other' | null>(null);
@@ -95,6 +102,7 @@ function ClinicsInner() {
           <h1 className="h-page" style={{ marginBottom: 4 }}>Clinics</h1>
           <p className="t-meta" style={{ margin: 0 }}>{data ? `${data.total} ${filtered ? 'matching' : 'clinics'} · live from the CRM` : 'Live from the CRM'}</p>
         </div>
+        {canCreate && <button className="btn btn-primary btn-sm" onClick={() => setNewAccount(true)}>New account</button>}
       </div>
 
       {/* Controls */}
@@ -213,6 +221,19 @@ function ClinicsInner() {
           onPrev={idx > 0 ? () => openClinic(rows[idx - 1].id) : undefined}
           onNext={idx >= 0 && idx < rows.length - 1 ? () => openClinic(rows[idx + 1].id) : undefined}
           onChanged={load}
+          retryNotFound={open === justCreated}
+        />
+      )}
+
+      {newAccount && (
+        <NewAccountModal
+          onClose={() => setNewAccount(false)}
+          onOpenAccount={(id) => {
+            setNewAccount(false);
+            setJustCreated(id);
+            setParams({ open: id });
+            load();
+          }}
         />
       )}
     </div>
