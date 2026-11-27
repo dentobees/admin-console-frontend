@@ -124,3 +124,19 @@ export interface StaffRow {
   role: StaffRole;
   active: boolean;
 }
+
+/** POST /crm/accounts (founder/admin). The admin-api forwards it to the CRM. */
+export interface CreateAccountInput {
+  ownerName: string;
+  email: string;
+  phoneCountry: 'IN' | 'AE' | 'SA' | 'QA' | 'GB' | 'US';
+  phone: string;
+  businessName: string;
+  password: string;
+}
+
+export interface CreateAccountResult {
+  clinicId: string;
+  clinicName: string;
+  email: string;
+}

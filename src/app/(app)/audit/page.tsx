@@ -15,6 +15,7 @@ const ACTIONS: Record<string, string> = {
   unmark_internal: 'Internal tag removed',
   staff_add: 'Staff added',
   staff_update: 'Staff changed',
+  account_create: 'Account created',
 };
 
 const istDateTime = new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' });
