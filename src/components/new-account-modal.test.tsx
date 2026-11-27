@@ -122,11 +122,18 @@ describe('NewAccountModal', () => {
     submit();
     await screen.findByText('Account created');
     fireEvent.click(screen.getByRole('button', { name: 'Close' }));
-    expect(onClose).toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalledWith(true);
     // onClose is a spy, so the modal stays mounted: it must be back to an empty form.
     await waitFor(() => expect(screen.getByLabelText('Temporary password')).toHaveValue(''));
     expect(screen.getByLabelText('Temporary password')).toHaveAttribute('type', 'password');
     expect(screen.queryByText('Account created')).not.toBeInTheDocument();
+  });
+
+  // protects=Cancel before creating tells the page nothing was made (no list refresh); fails_when=onClose reports true or is not called; no_claim=the page's refresh itself (page wiring)
+  it('Cancel on the form closes with created=false', () => {
+    const { onClose } = renderModal();
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(onClose).toHaveBeenCalledWith(false);
   });
 
   // protects=Open account hands the new clinic id to the page; fails_when=it passes another id or never calls back; no_claim=that the drawer opens (the page does that)

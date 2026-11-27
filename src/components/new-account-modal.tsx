@@ -54,7 +54,8 @@ function loginText(loginUrl: string, email: string, password: string) {
 }
 
 export function NewAccountModal({ onClose, onOpenAccount }: {
-  onClose: () => void;
+  /** `created` is true when an account was made, so the page refreshes its list. */
+  onClose: (created: boolean) => void;
   /** Called with the new clinic id; the page closes the modal and opens the drawer. */
   onOpenAccount: (clinicId: string) => void;
 }) {
@@ -78,12 +79,13 @@ export function NewAccountModal({ onClose, onOpenAccount }: {
   // Closing clears everything, the temporary password included.
   function close() {
     if (busy) return;
+    const didCreate = created !== null;
     setPassword('');
     setShowPw(false);
     setCreated(null);
     setCopied(false);
     setCopyFailed(false);
-    onClose();
+    onClose(didCreate);
   }
   const ref = useFocusTrap<HTMLDivElement>(close);
 

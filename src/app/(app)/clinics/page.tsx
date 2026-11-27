@@ -227,7 +227,10 @@ function ClinicsInner() {
 
       {newAccount && (
         <NewAccountModal
-          onClose={() => setNewAccount(false)}
+          onClose={(didCreate) => {
+            setNewAccount(false);
+            if (didCreate) load();
+          }}
           onOpenAccount={(id) => {
             setNewAccount(false);
             setJustCreated(id);
